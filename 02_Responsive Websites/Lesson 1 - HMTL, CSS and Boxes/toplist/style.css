@@ -1,0 +1,26 @@
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.title{
+  color:#fff;
+  background-color: #33bebe;
+  text-transform: uppercase;
+  font-family: "Arial", helvetica, sans-serif;
+}
+
+.app {
+  display: flex;
+  display: -webkit-flex;
+}
+
+.image{
+  max-width: 460px;
+}
+
+.description{
+  max-width: 705px;
+}
