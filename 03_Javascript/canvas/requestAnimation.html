@@ -1,0 +1,29 @@
+
+<!doctype>
+<html>
+    <head>
+        <title>GrayScale</title>
+    </head>
+    <body>
+        <p id="animate">content
+        </p>
+    <script>
+        var start = null;
+        var element = document.getElementById('animate');
+        element.style.position = 'absolute';
+
+        function step(timestamp) {
+            if (!start) start = timestamp;
+            console.log(timestamp / 60)
+            var progress = (timestamp - start).toFixed();
+            element.style.left = Math.min(progress / 10, 200) + 'px';
+            if (progress < 2000) {
+                window.requestAnimationFrame(step);
+            }
+        }
+
+        window.requestAnimationFrame(step);
+    </script>
+    </body>
+</html>
+

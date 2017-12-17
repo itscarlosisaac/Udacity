@@ -1,0 +1,86 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title></title>
+  </head>
+  <body>
+    <img src="icon.png" id="lamp" width="32" height="32">
+    <canvas id="c" width="800" height="800"></canvas>
+  </body>
+  <script type="text/javascript">
+    var c = document.querySelector("#c");
+    var ctx = c.getContext("2d");
+
+    c.addEventListener('mousemove', function(event) {
+      // console.log(event)
+      if(event.region) {
+        alert('ouch, my eye :(');
+      }
+    });
+    var image = new Image();
+    image.onload = function(){
+      console.log("Loaded");
+      // ctx.drawImage(image, 0, 0, c.width, c.height );
+      // var savedImage = c.toDataURL();
+      // window.open(savedImage);
+      
+      ctx.fillStyle = "blue";
+      ctx.fillRect(100,100,100,100)
+      ctx.clearRect(0,0,80,80);
+      // text
+      ctx.font = '24px Impact';
+      ctx.textBaseline = 'hanging';
+      var text = ctx.measureText('HELLO WORLD'); // TextMetrics object
+      console.log(text);
+      ctx.fillStyle = "white";
+      ctx.strokeStyle="#000";
+      ctx.lineWidth=3;
+      ctx.textAlign = "center"
+      ctx.strokeText("CANVAS HERE HERE HERE", c.width / 2,  20 );
+      ctx.fillText("CANVAS HERE HERE HERE", c.width / 2, 20 );
+
+      var grd = ctx.createLinearGradient(0, 0, 200, 0);
+      grd.addColorStop(0, "#a4F0e3");
+      grd.addColorStop(0.5, "#e2d3b4");
+      grd.addColorStop(0.5, "#0f0");
+      grd.addColorStop(0.7, "#a3d4f0");
+      grd.addColorStop(0.7, "#000");
+      ctx.fillStyle = "red";
+      ctx.globalCompositeOperation = "xor";
+      ctx.fillRect(0,0,200,200)
+
+      ctx.rotate( 20 * (Math.PI / 180) );
+
+      // Adding hit areas 
+      
+
+      // rotate takes radians, the forrmula to conver degrees to radians is
+      // radians = degrees * (Math.PI/180)
+      // The rotation point is on the top left corner
+
+      // ctx.clearRect(0, 0, c.width, c.height); // This line reset the canvas
+      // ctx.strokeRect(50,50,50,50);
+      //
+      // ctx.fillStyle = "red";
+      // ctx.beginPath();
+      // ctx.lineTo(75,75);
+      // ctx.lineTo(125,75);
+      // ctx.lineTo(125,125);
+      // ctx.lineTo(75,75);
+      // ctx.fill();
+      // ctx.stroke();
+
+      ctx.save(); // This code saves the state of the style to be able to change and then restore it with
+      ctx.restore(); //
+    }
+          // To use patter you should use the image element for the pattern
+      var img = document.getElementById("lamp");
+      ctx.drawImage( img, 0, 0, 100, 100 );
+      var pattern = ctx.createPattern(img, "repeat");
+      ctx.fillStyle = pattern;
+      ctx.rect(200,200,200,800);
+      ctx.fill();
+
+    image.src = "icon.png"
+  </script>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      html,
+      body {
+        font-family: Arial, sans-serif;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      #map {
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      var map;
+      function initMap() {
+        // Constructor creates a new map - only center and zoom are required.
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 26.426007, lng: -80.107025},
+          zoom: 13
+        });
+        var tribeca = {lat: 26.426007, lng: -80.107025};
+        var marker = new google.maps.Marker({
+          position:tribeca,
+          map:map,
+          animation: google.maps.Animation.DROP,
+          title: "My Location"
+        });
+        var infoWindow = new google.maps.InfoWindow({
+          content: 'Info window content'
+        });
+        marker.addListener('click', function(){
+          infoWindow.open(map, marker);
+        });
+
+        // Array of locations
+        var locations = [
+          {title: 'Title', location: {lat: 0.00, long: 0.00 } },
+          {title: 'Title 2', location: {lat: 0.00, long: 0.00 } }
+        ]
+      }
+    </script>
+
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCiljKtouaMaT1cr5cX3I9D1DzsbHC3iBc&v=3&callback=initMap">
+    </script>
+
+  </body>
+</html>

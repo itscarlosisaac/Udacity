@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Cat Clicker</title>
+        <style>
+            .body{ display: flex; flex-direction: column; }
+            .cat{ width: 40%;}
+            .cat img{ width: 100%; }
+            span{margin-left: 20px;}
+            li{ cursor: pointer; }
+        </style>
+    </head>
+    <body>
+        <div id="catPremium"></div>
+    </body>
+
+    <script type="text/javascript">
+
+        // function createCat(imageSrc, name){
+        //     var cat = document.createElement("DIV");
+        //     var catCounter = document.createElement("H3");
+        //     var imgCat = document.createElement("IMG");
+        //     var catName = document.createElement("P");
+        //     var node = document.createTextNode(name + " - ")
+        //     var counter = 0;
+        //     var counterNode = document.createTextNode(counter);
+        //     var counterElement = document.createElement("SPAN");
+
+        //     cat.className = "cat";
+        //     imgCat.src = imageSrc;
+        //     imgCat.alt = "Cat";
+        //     cat.appendChild(imgCat);
+        //     counterElement.appendChild(counterNode);
+        //     catName.appendChild(node);
+        //     catName.appendChild(counterElement);
+        //     cat.appendChild(catName);
+            
+        //     cat.addEventListener('click', function( e ){
+        //         counter++;
+        //         e.target.nextSibling.children[0].innerHTML = counter;
+        //     });
+
+        //     return cat;
+        // }
+        // var body = document.getElementsByTagName('body')[0];
+        // var catPremium = document.getElementById('catPremium');
+        // // body.appendChild( createCat("img/cat.jpg", "Chewie") );
+        // // body.appendChild( createCat("img/cat2.jpg", "Rahda") );
+        // // body.appendChild( createCat("img/cat3.jpg", "Jetske") );
+
+        var catClickerPremium = function(catsNames, catsImages, container){
+            this.catsNames = catsNames;
+            this.catsImages = catsImages;
+            this.catCounter = catsNames.length;
+            this.container = container
+            this.catList();
+        }
+
+        catClickerPremium.prototype.catList = function(){
+
+            var listContainer = document.createElement("UL");
+
+            for(var i = 0; i < this.catCounter; i++ ){
+                var e = document.createTextNode( catsNames[i] );
+                var h = document.createElement("LI");
+
+                var s = document.createTextNode( 0 );
+                var p = document.createElement("SPAN");
+
+                h.className = "cat-item";
+                h.id = catsNames[i].toLowerCase();
+                p.className = "counter";
+                p.appendChild(s);
+                h.dataSource = this.catsImages[i];
+                h.dataCounter = 0;
+                h.append(e, p);
+                listContainer.append(h);
+
+                h.addEventListener('click', function( e ){ 
+                    var catViewer = document.getElementsByClassName("cat-viewer")[0];
+                    catViewer.src = this.dataSource;
+                    catViewer.dataset[0] = this.id;
+                });
+            }
+            return listContainer;
+        }
+
+        catClickerPremium.prototype.init = function(){
+            this.container.append( this.catList() );
+            this.container.append( this.createViewer() );
+        }
+
+        catClickerPremium.prototype.createViewer = function(){
+            var view = document.createElement("IMG");
+            view.className = "cat-viewer";
+            view.src = this.catsImages[0];
+            view.dataset[0] = this.catsNames[0].toLowerCase();
+            view.addEventListener('click', this.addCounter);
+            return view;
+        }
+
+        catClickerPremium.prototype.addCounter = function(){
+            var id = this.dataset[0];
+            var elem = document.getElementById(id);
+            var counter = elem.children[0].innerHTML;
+            counter++;
+            elem.children[0].innerHTML = counter;
+        }
+
+        var catsNames = ["Chewie", "Jetske", "Rahda", "Michael", "John Smith" ];
+        var catsSources= ["img/cat.jpg", "img/cat2.jpg", "img/cat3.jpg" , "img/cat.jpg", "img/cat2.jpg"];
+        var n = new catClickerPremium(catsNames, catsSources, catPremium);
+        n.init(catPremium);
+        
+    </script>
+</html>

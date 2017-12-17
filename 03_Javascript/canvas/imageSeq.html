@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Canvas Demo</title>
+  </head>
+  <style>
+  .container{
+    width: 500px;
+    height: 500px;
+    display: block;
+    background: red;
+  }.containerD{
+    width: 500px;
+    height: 500px;
+    display: block;
+    background: green;
+  }
+  .image__sequence{
+    width: 100%;
+    height: auto;
+  }
+  </style>
+  <body>
+  <div class="container"></div>
+  <div class="containerD"></div>
+  </body>
+  <script type="text/javascript">
+
+    var imageSequence = function ( container, quantity, imageSource, imageFormat, callback ){
+      this.container = container;
+      this.quantity = quantity;
+      this.imageSource = imageSource;
+      this.imageFormat = imageFormat;
+      this.callback = callback;
+    }
+
+    imageSequence.prototype.createSequence = function(tagContainer){
+      var tag = document.createElement(tagContainer);
+      tag.className = 'image__sequence__container'
+      this.container.appendChild(tag);
+
+      var image = document.createElement('img');
+      image.src = this.imageSource + 0 + this.imageFormat;
+      image.className = 'image__sequence';
+      var imgC = this.container.querySelector('.image__sequence__container');
+      imgC.appendChild(image);
+    }
+
+    imageSequence.prototype.initSequence = function(tag){
+      this.createSequence(tag);
+    }
+
+    imageSequence.prototype.restartSequence = function(){
+      var target = this.container.querySelector('.image__sequence');
+      target.src = this.imageSource + 0 + this.imageFormat;
+    }
+
+    imageSequence.prototype.start = function(){
+      var currentFrame = 0;
+      var _this = this;
+      var img = _this.container.querySelector('.image__sequence');
+
+      window.requestAnimationFrame(function(time){
+        var currentFrame = (time / 100).toFixed();
+        img.src = _this.imageSource + currentFrame + _this.imageFormat;
+        currentFrame == _this.quantity ? function(){
+          img.src = _this.imageSource + _this.quantity + _this.imageFormat;
+          _this.callback();
+        } :
+        _this.start();
+      });
+    };
+
+    var c = document.querySelector('.container');
+    var d = document.querySelector('.containerD');
+    var ad = "/sequence/sequence_";
+
+    var newSeq = new imageSequence(c, 56, ad, '.jpg', seqEnded );
+    var newSeqT = new imageSequence(d, 56, ad, '.jpg', seqEnded );
+    newSeq.initSequence('div');
+    newSeqT.initSequence('div');
+    newSeq.start();
+    setTimeout(function(){ newSeqT.start()}, 1000 );
+
+
+  function seqEnded(){
+    console.log("EDEND" , this.restartSequence() )
+  }
+
+  </script>
+</html>

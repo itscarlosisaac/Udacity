@@ -1,0 +1,91 @@
+<!doctype html5>
+<html>
+    <head>
+        <title>Dive into Canvas</title>
+        
+    </head>
+    <body>
+        <canvas id="canvas" width="530" height="530"></canvas>
+        <script type="text/javascript">
+            var canvas = document.getElementById("canvas");
+            var context = canvas.getContext("2d");
+            canvas.addEventListener('click', function(evt){
+                console.log(evt);
+            })
+            // Setting the canvas back to its width it will reset it
+            //canvas.width = canvas.width;
+            for (var x = 0.5; x < canvas.width ; x += 10) {
+                context.moveTo(x, 0);
+                context.lineTo(x, canvas.height);
+            }
+            for (var y = 0.5; y < canvas.height; y += 10) {
+                context.moveTo(0, y);
+                context.lineTo(canvas.width, y);
+            }
+            context.strokeStyle = "#eee";
+            context.stroke();
+
+            context.strokeStyle = "#F00";
+            console.log(context)
+            context.lineWidth = 2;
+            context.strokeRect(150, 130, 150, 100);
+            context.fillRect(200, 50, 70, 50);
+
+            //  Working with lines
+            context.strokeStyle = "#000";
+            context.beginPath();
+            context.moveTo(0,40);
+            context.lineTo(240,40);
+            context.moveTo(260,40);
+            context.lineTo(canvas.width - 5,40);
+            context.moveTo(canvas.width - 10,35);
+            context.lineTo(canvas.width - 5,40);
+            context.lineTo(canvas.width - 10 ,45);
+            
+            context.moveTo(60,0);
+            context.lineTo(60,153);
+            context.moveTo(60,173);
+            context.lineTo(60,canvas.height - 5);
+            context.moveTo(65,canvas.height - 10);
+            context.lineTo(60,canvas.height - 5);
+            context.lineTo(55,canvas.height - 10);
+            
+            context.stroke();
+
+            //  Working with TEXT
+            context.font = "bold 12px sans-serif";
+            context.fillText("x", 248, 43);
+            context.fillText("y", 58, 165);
+
+            context.textBaseline = "top";
+            context.fillText( "( 0, 0)", 8 , 5);
+
+            context.textAlign = "right";
+            context.textBaseline = "bottom";
+            var textMeasurement = context.measureText( "( " + canvas.width + " , " + canvas.height + " )");
+            context.fillText( "( " + canvas.width + " , " + canvas.height + " )", canvas.width - textMeasurement.width, canvas.height - textMeasurement.width )
+            context.fillRect(0,0,3,3);
+            context.fillRect(canvas.width - 3 , canvas.height - 3 , 3 , 3);
+
+            var myGradient =context.createLinearGradient( 0, 0, 300, 0 );
+            myGradient.addColorStop(0, "black");
+            myGradient.addColorStop(1, "white");
+            context.fillStyle = myGradient;
+            context.fillRect(80, 280, 150, 80);
+
+            var secondGradient = context.createLinearGradient( 0, 0, 240, 400 );
+            secondGradient.addColorStop( 0, "black" );
+            secondGradient.addColorStop( 1, "white" );
+            context.fillStyle = secondGradient;
+            context.fillRect(320, 80, 150, 80 );
+
+            context.closePath();
+
+            context.beginPath();
+            context.arc(150, 90, 30, 0, Math.PI * 2, false);
+            context.fillStyle = "red";
+            context.fill();
+
+        </script>
+    </body>
+</html>
